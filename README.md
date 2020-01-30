@@ -1,9 +1,8 @@
 ## 简介
 
-[vue-admin-webapp](https://gcddblue.github.io/vue-admin-webapp) 是一个后台管理 spa 页面，它基于 [vue](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element) 采用了最新的前端技术栈，实现了登录权限验证，动态路由生成，并使用 [easy-mock](https://github.com/easy-mock/easy-mock) 来模拟请求数据，实现了典型的业务模型案例，它可以帮你快速搭建后台管理系统模板，并根据实际的业务需求添加路由来实现企业级管理页面，相信本项目一定能帮助到你。
+[start-admin](https://github.com/flying0601/start-admin.git) 是一个后台管理 spa 页面，它基于 [vue](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element) 采用了最新的前端技术栈，实现了登录权限验证，动态路由生成，并使用 [easy-mock](https://github.com/easy-mock/easy-mock) 来模拟请求数据，实现了典型的业务模型案例，它可以帮你快速搭建后台管理系统模板，并根据实际的业务需求添加路由来实现企业级管理页面，相信本项目一定能帮助到你。
 
-- [在线预览-github](https://gcddblue.github.io/vue-admin-webapp)
-- [在线预览-gitee](https://gcddblue.gitee.io/vue-admin-webapp) （推荐国内用户）
+
 
 **目前版本基于 `webpack 4.0+` 和 `vue-cli 3.x` 版本构建，需要 [Node.js](https://nodejs.org/) 8.9 或更高版本（推荐 8.11.0+），相关知识可以自行进官网进行了解**
 
@@ -13,7 +12,6 @@
 
 详细的项目介绍，可以关注我的的相关文章：
 
-[正确姿势开发 vue 后台管理系统](https://juejin.im/post/5d69f6676fb9a06b0b1c8cd2)
 
 ### 安装
 
@@ -22,7 +20,7 @@
 git clone
 
 # 进入项目目录
-cd vue-admin-webapp
+cd start-admin
 
 # 安装依赖
 npm install
@@ -70,12 +68,4 @@ npm run serve
  - 阿里iconfont
 ```
 
-### Online
-
-[在线浏览](https://gcddblue.gitee.io/vue-admin-webapp)
-
-## License
-
-[MIT](https://github.com/gcddblue/vue-admin-webapp/blob/master/LICENSE)
-
-Copyright (c) 2019 gcddblu
+Copyright (c) 2020 flying0601
