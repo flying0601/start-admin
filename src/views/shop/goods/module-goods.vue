@@ -5,15 +5,24 @@
         <span>复杂操作表格</span>
       </div> -->
       <div class="searchDiv">
+        <el-cascader
+          class="cascader"
+          v-model="sch_category"
+          :options="options"
+          :props="{ expandTrigger: 'hover' }"
+          @change="handleChange"
+        ></el-cascader>
         <el-input
           type="text"
-          placeholder="请输入订单号"
+          placeholder="请输入名称关键字"
           class="width1"
-          v-model="sch_order"
-        ></el-input>
-        <el-select
-          v-model="sch_status"
           clearable
+          v-model="sch_keyword"
+        ></el-input>
+        <!-- <el-select
+          v-model="sch_category"
+          clearable
+          filterable
           class="width1"
           placeholde="请选择状态"
         >
@@ -23,14 +32,7 @@
             :value="item.value"
             :key="item.value"
           ></el-option>
-        </el-select>
-        <!-- <el-date-picker
-          class="width1"
-          v-model="sch_date"
-          type="date"
-          placeholder="选择日期时间"
-          value-format="yyyy-MM-dd"
-        ></el-date-picker> -->
+        </el-select> -->
         <el-button type="primary" icon="el-icon-search" @click="searchTab()"
           >搜索</el-button
         >
@@ -47,16 +49,24 @@
             {{ scope.$index + 1 + pageSize * (currentPage - 1) }}
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="名称"></el-table-column>
+        <el-table-column
+          prop="name"
+          label="名称"
+          :show-overflow-tooltip="true"
+        ></el-table-column>
         <el-table-column prop="c_name" label="类别"></el-table-column>
-        <el-table-column prop="goods_brief" label="描述"></el-table-column>
-        <el-table-column prop="retail_price" label="价格" ></el-table-column>
+        <el-table-column
+          prop="goods_brief"
+          label="描述"
+          :show-overflow-tooltip="true"
+        ></el-table-column>
+        <el-table-column prop="retail_price" label="价格"></el-table-column>
         <el-table-column
           prop="goods_number"
           label="数量"
           width="60"
         ></el-table-column>
-        <el-table-column prop="status" label="状态" width="60">
+        <el-table-column prop="status" label="状态" width="70">
           <template slot-scope="scope">
             <el-tag :type="scope.row.is_delete | tagClass">{{
               scope.row.is_delete | statusText
@@ -157,14 +167,14 @@
 </template>
 
 <script>
-import { listGoods } from '@/api/shop'
+import { listGoods, getCataGoods } from '@/api/shop'
 export default {
   data() {
     return {
       listData: [],
-      sch_order: '',
-      sch_status: null,
-      sch_date: null,
+      sch_keyword: '',
+      sch_category: [0],
+      temp_category: null,
       currentPage: 1,
       pageSize: 10,
       total: 0,
@@ -172,12 +182,7 @@ export default {
       diaIsShow: false,
       formData: {},
       editType: '',
-      options: [
-        { label: '待审核', value: 1 },
-        { label: '配送中', value: 2 },
-        { label: '已完成', value: 0 },
-        { label: '已取消', value: 3 }
-      ],
+      options: [],
       rowIndex: 0,
       rules: {
         // order: [{ required: true, message: '请输入订单号', trigger: 'blur' }],
@@ -199,7 +204,10 @@ export default {
     }
   },
   created() {
-    this._listGoods()
+    //商品列表
+    this._listGoods({ cateid: 'all' })
+    //分类下拉框数据
+    this._getCataGoods()
   },
   filters: {
     statusText(val) {
@@ -225,6 +233,9 @@ export default {
       let data = {
         size: val
       }
+      this.sch_keyword && (data.name = this.sch_keyword)
+      this.sch_category &&
+        (data.cateid = this.sch_category[1] ? this.sch_category[1] : 'all')
       this._listGoods(data)
     },
     handlePage(val) {
@@ -232,6 +243,25 @@ export default {
       let data = {
         size: this.pageSize,
         page: val
+      }
+      this.sch_keyword && (data.name = this.sch_keyword)
+      this.sch_category &&
+        (data.cateid = this.sch_category[1] ? this.sch_category[1] : 'all')
+      this._listGoods(data)
+    },
+    handleChange(sch_category) {
+      this.currentPage = 1
+      let data = {
+        name: this.sch_keyword,
+        cateid: sch_category[1] ? sch_category[1] : 'all'
+      }
+      this._listGoods(data)
+    },
+    searchTab() {
+      this.currentPage = 1
+      let data = {
+        name: this.sch_keyword,
+        cateid: this.sch_category[1] ? this.sch_category[1] : 'all'
       }
       this._listGoods(data)
     },
@@ -243,6 +273,16 @@ export default {
         })
         .catch(error => {
           this.$message.error(error.message)
+        })
+    },
+    _getCataGoods(data) {
+      getCataGoods(data)
+        .then(res => {
+          this.options = res.data
+          this.options.unshift({ label: '全部', value: 0 })
+        })
+        .catch(error => {
+          this.$message.error(error)
         })
     },
     getPageData() {
@@ -339,6 +379,10 @@ export default {
   .el-button {
     padding: 11px 20px;
   }
+  .cascader {
+    width: 220px;
+    margin-right: 10px;
+  }
 }
 .width1 {
   width: 180px;
@@ -366,5 +410,10 @@ export default {
 }
 .searchDiv [class^='el-icon'] {
   color: #fff;
+}
+.el-cascader__dropdown {
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
 }
 </style>

@@ -17,7 +17,7 @@
 
 ```
 # 克隆项目
-git clone
+git clone https://github.com/flying0601/start-admin.git
 
 # 进入项目目录
 cd start-admin

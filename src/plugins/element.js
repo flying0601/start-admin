@@ -19,6 +19,7 @@ import {
   Tooltip,
   Breadcrumb,
   BreadcrumbItem,
+  Cascader,
   Dropdown,
   DropdownMenu,
   DropdownItem,
@@ -68,6 +69,7 @@ Vue.use(MenuItem)
 Vue.use(Tooltip)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Cascader)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)

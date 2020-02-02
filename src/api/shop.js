@@ -1,7 +1,7 @@
 import $axios from './index'
 //分类接口
-export function getAllCategory(data) {
-  const url = '/category/list'
+export function getListCategory(data) {
+  const url = '/category/cateList'
   return $axios.get(url, data)
 }
 export function updCategory(data) {
@@ -17,6 +17,10 @@ export function delCategory(data) {
   return $axios.post(url, data)
 }
 //列表接口
+export function getCataGoods(data) {
+  const url = '/category/cataGoods'
+  return $axios.get(url, data)
+}
 export function listGoods(data) {
   const url = '/goods/list'
   return $axios.get(url, data)
